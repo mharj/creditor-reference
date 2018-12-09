@@ -1,0 +1,5 @@
+language: node_js
+node_js:
+  - "node"
+notifications:
+  slack: ajrsolutions:EWTsXxBjVbzgEpsafZDk1Fdn

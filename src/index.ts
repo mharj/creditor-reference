@@ -9,6 +9,9 @@ export enum RefType {
 }
 
 interface IOptions {
+	/**
+	 * if true, gives zero padded code
+	 */
 	leadingZeroes?: boolean;
 }
 
@@ -30,6 +33,12 @@ const buildIsoReference = (code: string, options?: IOptions) => {
 	return 'RF' + buildIsoReferenceCheckSum(preCode.split('')) + outCode;
 };
 
+/**
+ * Builds creditor reference code
+ * @param code base reference code
+ * @param type code type
+ * @param options
+ */
 export const build = (code: string, type: RefType, options?: IOptions): string => {
 	const preCode = code.replace(/\s/g, '');
 	switch (type) {
@@ -42,6 +51,11 @@ export const build = (code: string, type: RefType, options?: IOptions): string =
 	}
 };
 
+/**
+ *
+ * @param code reference code
+ * @return is code valid or not
+ */
 export const verify = (code: string): boolean => {
 	const preCode = code.replace(/\s/g, '');
 	if (preCode.match(rfReg)) {
@@ -54,4 +68,20 @@ export const verify = (code: string): boolean => {
 		}
 	}
 	return false;
+};
+
+/**
+ * Gets code type with prefix check and verifying
+ * @param code reference code
+ * @return code type
+ */
+export const type = (code: string): RefType => {
+	const preCode = code.replace(/\s/g, '');
+	if ( preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) == preCode) {
+		return RefType.ISO;
+
+	} else if ( buildFiReference(preCode.slice(0, preCode.length - 1)) == preCode ) {
+		return RefType.FI;
+	}
+	throw new Error('no type found');
 };
