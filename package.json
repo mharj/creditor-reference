@@ -1,12 +1,12 @@
 {
   "name": "creditor-reference",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "creditor reference code builder and verification",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "mocha -r ts-node/register test/*.ts"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -27,13 +27,15 @@
   },
   "homepage": "https://github.com/mharj/creditor-reference#readme",
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.12.12",
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.14.22",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.1",
-    "tslib": "^1.9.3",
-    "typescript": "^3.2.2"
+    "mocha": "^6.2.2",
+    "source-map-support": "^0.5.13",
+    "ts-node": "^8.4.1",
+    "tslib": "^1.10.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.4"
   }
 }

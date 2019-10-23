@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'test';
 import {expect} from 'chai';
-import {describe, it} from 'mocha';
-import {verify, build, type, RefType} from '../src';
+import 'mocha';
+import {build, type, verify} from '../src';
 import {buildFiReferenceCheckSum} from '../src/finnish';
 import {buildIsoReferenceCheckSum} from '../src/iso11649';
 
@@ -24,44 +24,30 @@ describe('reference codes', () => {
 	});
 	describe('build()', () => {
 		it('should build ref codes', () => {
-			expect(build('99999 88888 77777 6666', RefType.FI)).to.be.eq('99999888887777766668');
-			expect(build('11111 22222 33333 44444 5', RefType.ISO)).to.be.eq('RF39111112222233333444445');
-			expect(build('00000 00008', RefType.ISO)).to.be.eq('RF798'); // should trim leading zeroes
-			expect(build('s0MeTe5T', RefType.ISO)).to.be.eq('RF32S0METE5T');
-			expect(build('539007547034', RefType.ISO, {leadingZeroes: true}))
+			expect(build('99999 88888 77777 6666', 'FI')).to.be.eq('99999888887777766668');
+			expect(build('11111 22222 33333 44444 5', 'ISO')).to.be.eq('RF39111112222233333444445');
+			expect(build('00000 00008', 'ISO')).to.be.eq('RF798'); // should trim leading zeroes
+			expect(build('s0MeTe5T', 'ISO')).to.be.eq('RF32S0METE5T');
+			expect(build('539007547034', 'ISO', {leadingZeroes: true}))
 				.to.be.eq('RF18000000000539007547034')
 				.and.length(25); // header + 21
-			expect(build('8', RefType.FI, {leadingZeroes: true}))
+			expect(build('8', 'FI', {leadingZeroes: true}))
 				.to.be.eq('00000000000000000084')
 				.and.length(20); // 19 + check
 		});
-		it('should not build ref codes', (done) => {
-			try {
-				build('90085220010131011828', RefType.FI);
-				return done(new Error('should not happen'));
-			} catch (err) {}
-			try {
-				build('900852200101310118281323123', RefType.ISO);
-				return done(new Error('should not happen'));
-			} catch (err) {}
-			done();
+		it('should not build ref codes', () => {
+			expect(build.bind(null, '90085220010131011828', 'FI')).to.throw('data too large');
+			expect(build.bind(null, '900852200101310118281323123', 'ISO')).to.throw('data too large');
 		});
 	});
 	describe('type()', () => {
 		it('should return type', () => {
-			expect(type('RF32S0METE5T')).to.be.eq(RefType.ISO);
-			expect(type('84')).to.be.eq(RefType.FI);
+			expect(type('RF32S0METE5T')).to.be.eq('ISO');
+			expect(type('84')).to.be.eq('FI');
 		});
-		it('should not return type', (done) => {
-			try {
-				expect(type('RF00S0METE5T')).to.be.eq(RefType.ISO);
-				done(new Error('should not happen'));
-			} catch (err) {}
-			try {
-				expect(type('89')).to.be.eq(RefType.FI);
-				done(new Error('should not happen'));
-			} catch (err) {}
-			done();
+		it('should not return type', () => {
+			expect(type.bind(null, 'RF00S0METE5T')).to.throw('no type found');
+			expect(type.bind(null, '89')).to.throw('no type found');
 		});
 	});
 });

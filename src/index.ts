@@ -2,11 +2,7 @@ import {buildFiReferenceCheckSum} from './finnish';
 import {buildIsoReferenceCheckSum} from './iso11649';
 
 const rfReg = new RegExp(/^RF(\d\d)/i);
-
-export enum RefType {
-	ISO = 'ISO',
-	FI = 'FI',
-}
+type RefType = 'ISO' | 'FI';
 
 interface IOptions {
 	/**
@@ -36,15 +32,15 @@ const buildIsoReference = (code: string, options?: IOptions) => {
 /**
  * Builds creditor reference code
  * @param code base reference code
- * @param type code type
+ * @param refType code type 'ISO' or 'FI'
  * @param options
  */
-export const build = (code: string, type: RefType, options?: IOptions): string => {
+export const build = (code: string, refType: RefType, options?: IOptions): string => {
 	const preCode = code.replace(/\s/g, '');
-	switch (type) {
-		case RefType.FI:
+	switch (refType) {
+		case 'FI':
 			return buildFiReference(preCode, options);
-		case RefType.ISO:
+		case 'ISO':
 			return buildIsoReference(preCode, options);
 		default:
 			throw new Error('Unknown Ref Type');
@@ -59,11 +55,11 @@ export const build = (code: string, type: RefType, options?: IOptions): string =
 export const verify = (code: string): boolean => {
 	const preCode = code.replace(/\s/g, '');
 	if (preCode.match(rfReg)) {
-		if (buildIsoReference(preCode.slice(4)) == preCode) {
+		if (buildIsoReference(preCode.slice(4)) === preCode) {
 			return true;
 		}
 	} else {
-		if (buildFiReference(preCode.slice(0, preCode.length - 1)) == preCode) {
+		if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
 			return true;
 		}
 	}
@@ -77,11 +73,10 @@ export const verify = (code: string): boolean => {
  */
 export const type = (code: string): RefType => {
 	const preCode = code.replace(/\s/g, '');
-	if ( preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) == preCode) {
-		return RefType.ISO;
-
-	} else if ( buildFiReference(preCode.slice(0, preCode.length - 1)) == preCode ) {
-		return RefType.FI;
+	if (preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) === preCode) {
+		return 'ISO';
+	} else if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
+		return 'FI';
 	}
 	throw new Error('no type found');
 };
