@@ -6,7 +6,15 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "mocha"
+    "test": "mocha test/**/*.ts"
+  },
+  "mocha": {
+    "exit": true,
+    "recursive": true,
+    "require": [
+      "ts-node/register",
+      "source-map-support/register"
+    ]
   },
   "repository": {
     "type": "git",
