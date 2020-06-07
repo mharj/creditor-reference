@@ -20,6 +20,8 @@ describe('reference codes', () => {
 		it('should verify ref codes', () => {
 			expect(verify('RF39111112222233333444445')).to.be.eq(true);
 			expect(verify('99999888887777766668')).to.be.eq(true);
+			expect(verify('ASDASDASD')).to.be.eq(false);
+			expect(verify('RF00')).to.be.eq(false);
 		});
 	});
 	describe('build()', () => {
@@ -34,6 +36,7 @@ describe('reference codes', () => {
 			expect(build('8', 'FI', {leadingZeroes: true}))
 				.to.be.eq('00000000000000000084')
 				.and.length(20); // 19 + check
+			expect(build.bind(null, '8', 'SV' as any, {leadingZeroes: true})).to.throw(TypeError, 'Unknown Ref Type');
 		});
 		it('should not build ref codes', () => {
 			expect(build.bind(null, '90085220010131011828', 'FI')).to.throw('data too large');

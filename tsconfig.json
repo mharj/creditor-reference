@@ -8,17 +8,16 @@
 		],
 		"rootDir": "./src",
 		"outDir": "./dist",
-		"mapRoot": "./dist",
 		"moduleResolution": "node",
 		"sourceRoot": "./src",
 		"types": [
 			"node"
 		],
 		"strict": true,
-		"sourceMap": true,
 		"declaration": true,
 		"removeComments": false,
 		"inlineSources": true,
+		"inlineSourceMap": true,
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,

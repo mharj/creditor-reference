@@ -43,7 +43,7 @@ export const build = (code: string, refType: RefType, options?: IOptions): strin
 		case 'ISO':
 			return buildIsoReference(preCode, options);
 		default:
-			throw new Error('Unknown Ref Type');
+			throw new TypeError('Unknown Ref Type');
 	}
 };
 
@@ -55,15 +55,10 @@ export const build = (code: string, refType: RefType, options?: IOptions): strin
 export const verify = (code: string): boolean => {
 	const preCode = code.replace(/\s/g, '');
 	if (preCode.match(rfReg)) {
-		if (buildIsoReference(preCode.slice(4)) === preCode) {
-			return true;
-		}
+		return buildIsoReference(preCode.slice(4)) === preCode ? true : false;
 	} else {
-		if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
-			return true;
-		}
+		return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode ? true : false;
 	}
-	return false;
 };
 
 /**

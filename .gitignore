@@ -62,3 +62,6 @@ typings/
 
 # TS generated
 dist
+
+# mocha-junit-reporter
+test-results.xml
