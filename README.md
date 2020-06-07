@@ -20,12 +20,11 @@ if (type('99999888887777766668') === 'FI') {
 ```html
 <html>
 	<head>
-		<script crossorigin="anonymous" type="module" src="https://unpkg.com/creditor-reference@0.1.3/dist/umd/index.js"></script>
+		<script crossorigin="anonymous" src="https://unpkg.com/creditor-reference@0.1.3/dist/umd/index.js"></script>
 	</head>
 	<body>
 		<script>
-			import {verify} from './modules/index.js';
-			console.log('verify', verify('RF39111112222233333444445'));
+			console.log('verify', CreditorReference.verify('RF39111112222233333444445'));
 		</script>
 	</body>
 </html>
