@@ -10,13 +10,15 @@
     "prepublishOnly": "npm run build",
     "test": "nyc mocha test/**/*.ts"
   },
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "mocha": {
     "exit": true,
     "recursive": true,
     "require": [
       "ts-node/register",
-      "source-map-support/register",
-      "esm"
+      "source-map-support/register"
     ],
     "reporters": [
       "spec",
@@ -62,7 +64,6 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^12.12.44",
     "chai": "^4.2.0",
-    "esm": "^3.2.25",
     "mocha": "^7.2.0",
     "mocha-junit-reporter": "^1.23.3",
     "nyc": "^15.1.0",

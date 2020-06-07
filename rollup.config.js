@@ -7,9 +7,8 @@ export default {
 	input: 'src/index.ts', // our source file
 	output: [
 		{
-			dir: './dist/esm/',
+			file: pkg.module,
 			format: 'es', // the preferred format
-			preserveModules: true,
 			sourcemap: true,
 			sourcemapPathTransform: (relativePath) => {
 				return path.relative('../../src', relativePath);
@@ -29,6 +28,7 @@ export default {
 	plugins: [
 		typescript({
 			typescript: require('typescript'),
+			tsconfig: 'tsconfig.rollup.json',
 			preserveModules: true,
 		}),
 		sourcemaps(),
