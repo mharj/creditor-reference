@@ -20,7 +20,7 @@ if (type('99999888887777766668') === 'FI') {
 ```html
 <html>
 	<head>
-		<script crossorigin="anonymous" type="module" src="https://unpkg.com/creditor-reference@0.1.2/dist/umd/index.js"></script>
+		<script crossorigin="anonymous" type="module" src="https://unpkg.com/creditor-reference@0.1.3/dist/umd/index.js"></script>
 	</head>
 	<body>
 		<script>
@@ -38,7 +38,7 @@ if (type('99999888887777766668') === 'FI') {
 	<head></head>
 	<body>
 		<script type="module">
-			import {verify} from 'https://unpkg.com/creditor-reference@0.1.2/dist/esm/index.js';
+			import {verify} from 'https://unpkg.com/creditor-reference@0.1.3/dist/esm/index.js';
 			console.log('verify', verify('RF39111112222233333444445'));
 		</script>
 	</body>
