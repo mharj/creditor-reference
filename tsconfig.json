@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "ESNext",
 		"target": "es5",
 		"lib": [
 			"es2017",
@@ -13,11 +13,12 @@
 		"types": [
 			"node"
 		],
+		"sourceMap": true,
 		"strict": true,
 		"declaration": true,
 		"removeComments": false,
 		"inlineSources": true,
-		"inlineSourceMap": true,
+		"inlineSourceMap": false,
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
