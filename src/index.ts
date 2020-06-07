@@ -36,7 +36,7 @@ const buildIsoReference = (code: string, options?: IOptions) => {
  * @param options
  */
 export const build = (code: string, refType: RefType, options?: IOptions): string => {
-	const preCode = code.replace(/\s/g, '');
+	const preCode = filterCode(code);
 	switch (refType) {
 		case 'FI':
 			return buildFiReference(preCode, options);
@@ -47,17 +47,22 @@ export const build = (code: string, refType: RefType, options?: IOptions): strin
 	}
 };
 
+const filterCode = (code: string) => {
+	return code.replace(/\s/g, '');
+};
+
 /**
  *
  * @param code reference code
  * @return is code valid or not
  */
 export const verify = (code: string): boolean => {
-	const preCode = code.replace(/\s/g, '');
-	if (preCode.match(rfReg)) {
-		return buildIsoReference(preCode.slice(4)) === preCode ? true : false;
-	} else {
-		return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode ? true : false;
+	const preCode = filterCode(code);
+	switch (type(preCode)) {
+		case 'ISO':
+			return buildIsoReference(preCode.slice(4)) === preCode ? true : false;
+		case 'FI':
+			return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode ? true : false;
 	}
 };
 
@@ -67,7 +72,7 @@ export const verify = (code: string): boolean => {
  * @return code type
  */
 export const type = (code: string): RefType => {
-	const preCode = code.replace(/\s/g, '');
+	const preCode = filterCode(code);
 	if (preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) === preCode) {
 		return 'ISO';
 	} else if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
