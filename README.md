@@ -1,4 +1,4 @@
-### Bill Reference code build and validation [![Build Status](https://travis-ci.org/mharj/creditor-reference.svg?branch=master)](https://travis-ci.org/mharj/creditor-reference)
+### Bill Reference code build and validation [![Build Status](https://travis-ci.org/mharj/creditor-reference.svg?branch=master)](https://travis-ci.org/mharj/creditor-reference) [![Maintainability](https://api.codeclimate.com/v1/badges/133d7273f46a087fba52/maintainability)](https://codeclimate.com/github/mharj/creditor-reference/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/133d7273f46a087fba52/test_coverage)](https://codeclimate.com/github/mharj/creditor-reference/test_coverage)
 
 ```javascript
 console.log(build('99999 88888 77777 6666', 'FI'));
