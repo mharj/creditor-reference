@@ -20,8 +20,8 @@ describe('reference codes', () => {
 		it('should verify ref codes', () => {
 			expect(verify('RF39111112222233333444445')).to.be.eq(true);
 			expect(verify('99999888887777766668')).to.be.eq(true);
-			expect(verify('ASDASDASD')).to.be.eq(false);
-			expect(verify('RF00')).to.be.eq(false);
+			expect(verify.bind(null, 'ASDASDASD')).to.throw(TypeError, 'Unknown Ref Type');
+			expect(verify.bind(null, 'RF00')).to.throw(Error, 'no data to build Iso Reference');
 		});
 	});
 	describe('build()', () => {
@@ -49,8 +49,8 @@ describe('reference codes', () => {
 			expect(type('84')).to.be.eq('FI');
 		});
 		it('should not return type', () => {
-			expect(type.bind(null, 'RF00S0METE5T')).to.throw('no type found');
-			expect(type.bind(null, '89')).to.throw('no type found');
+			expect(type.bind(null, 'RF00S0METE5T')).to.throw(TypeError, 'Unknown Ref Type');
+			expect(type.bind(null, '89')).to.throw(TypeError, 'Unknown Ref Type');
 		});
 	});
 });

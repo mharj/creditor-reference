@@ -21,6 +21,9 @@ const buildFiReference = (code: string, options?: IOptions) => {
 };
 
 const buildIsoReference = (code: string, options?: IOptions) => {
+	if (code.length === 0) {
+		throw new Error('no data to build Iso Reference');
+	}
 	const preCode = code.replace(/^0+/, '').toUpperCase();
 	let outCode = preCode;
 	if (options && 'leadingZeroes' in options) {
@@ -78,5 +81,5 @@ export const type = (code: string): RefType => {
 	} else if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
 		return 'FI';
 	}
-	throw new Error('no type found');
+	throw new TypeError('Unknown Ref Type');
 };
