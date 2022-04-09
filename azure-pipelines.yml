@@ -1,0 +1,38 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+- name: 'vmImage'
+  value: 'ubuntu-20.04'
+- name: 'nodeVersion'
+  value: '16.x'
+
+pool:
+  vmImage: '$(vmImage)'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '$(nodeVersion)'
+  displayName: 'Install Node.js $(nodeVersion)'
+- task: Npm@1
+  inputs:
+    command: 'install'
+- script: | 
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    chmod +x ./cc-test-reporter
+    ./cc-test-reporter before-build
+  displayName: 'Setup cc-test-reporter'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run coverage'
+  continueOnError: true
+- script: |
+    ./cc-test-reporter after-build
+  displayName: 'Send cc-test-reporter'
