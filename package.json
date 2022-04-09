@@ -51,7 +51,8 @@
         ],
         "reporter": [
             "text",
-            "lcovonly"
+            "lcovonly",
+            "cobertura"
         ],
         "all": true,
         "require": [
