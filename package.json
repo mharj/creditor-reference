@@ -1,6 +1,6 @@
 {
     "name": "creditor-reference",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "creditor reference code builder and verification",
     "main": "dist/index.js",
     "module": "dist/esm/index.js",
