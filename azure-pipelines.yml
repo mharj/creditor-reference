@@ -34,11 +34,7 @@ steps:
     customCommand: 'run coverage'
   continueOnError: true
   displayName: 'Mocha run coverage'
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './test-results.xml'
-  continueOnError: true
+- task: PublishTestResults@2
 - script: |
     ./cc-test-reporter after-build
   displayName: 'Send cc-test-reporter'
