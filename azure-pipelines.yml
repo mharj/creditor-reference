@@ -35,6 +35,8 @@ steps:
   continueOnError: true
   displayName: 'Mocha run coverage'
 - task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/test-results.xml'
 - script: |
     ./cc-test-reporter after-build
   displayName: 'Send cc-test-reporter'
