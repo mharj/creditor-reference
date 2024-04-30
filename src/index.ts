@@ -11,16 +11,16 @@ interface IOptions {
 	leadingZeroes?: boolean;
 }
 
-const buildFiReference = (code: string, options?: IOptions) => {
+function buildFiReference(code: string, options?: IOptions): string {
 	const values = code.split('').map((v) => parseInt(v, 10));
 	let outCode = code;
 	if (options && 'leadingZeroes' in options) {
 		outCode = ('0000000000000000000' + code).slice(-19);
 	}
 	return outCode + buildFiReferenceCheckSum(values);
-};
+}
 
-const buildIsoReference = (code: string, options?: IOptions) => {
+function buildIsoReference(code: string, options?: IOptions): string {
 	if (code.length === 0) {
 		throw new Error('no data to build Iso Reference');
 	}
@@ -30,7 +30,7 @@ const buildIsoReference = (code: string, options?: IOptions) => {
 		outCode = ('000000000000000000000' + preCode).slice(-21);
 	}
 	return 'RF' + buildIsoReferenceCheckSum(preCode.split('')) + outCode;
-};
+}
 
 /**
  * Builds creditor reference code
@@ -38,7 +38,7 @@ const buildIsoReference = (code: string, options?: IOptions) => {
  * @param refType code type 'ISO' or 'FI'
  * @param options
  */
-export const build = (code: string, refType: RefType, options?: IOptions): string => {
+export function build(code: string, refType: RefType, options?: IOptions): string {
 	const preCode = filterCode(code);
 	switch (refType) {
 		case 'FI':
@@ -48,18 +48,18 @@ export const build = (code: string, refType: RefType, options?: IOptions): strin
 		default:
 			throw new TypeError('Unknown Ref Type');
 	}
-};
+}
 
-const filterCode = (code: string) => {
+function filterCode(code: string): string {
 	return code.replace(/\s/g, '');
-};
+}
 
 /**
  *
  * @param code reference code
  * @return is code valid or not
  */
-export const verify = (code: string): boolean => {
+export function verify(code: string): boolean {
 	const preCode = filterCode(code);
 	switch (type(preCode)) {
 		case 'ISO':
@@ -67,14 +67,14 @@ export const verify = (code: string): boolean => {
 		case 'FI':
 			return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode ? true : false;
 	}
-};
+}
 
 /**
  * Gets code type with prefix check and verifying
  * @param code reference code
  * @return code type
  */
-export const type = (code: string): RefType => {
+export function type(code: string): RefType {
 	const preCode = filterCode(code);
 	if (preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) === preCode) {
 		return 'ISO';
@@ -82,4 +82,4 @@ export const type = (code: string): RefType => {
 		return 'FI';
 	}
 	throw new TypeError('Unknown Ref Type');
-};
+}

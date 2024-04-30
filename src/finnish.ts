@@ -1,10 +1,10 @@
 const multi = [7, 3, 1];
 
-const pad = (value: number) => {
+function pad(value: number): number {
 	return Math.ceil(value / 10) * 10 - value;
-};
+}
 
-export const buildFiReferenceCheckSum = (data: number[]) => {
+export function buildFiReferenceCheckSum(data: number[]): number {
 	if (data.length > 19) {
 		throw new Error('data too large');
 	}
@@ -12,6 +12,6 @@ export const buildFiReferenceCheckSum = (data: number[]) => {
 		data
 			.reverse()
 			.map((value, idx) => multi[idx % 3] * value)
-			.reduce((prev, curr) => prev + curr),
+			.reduce((prev, curr) => prev + curr)
 	);
-};
+}

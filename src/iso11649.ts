@@ -1,6 +1,6 @@
 const textReg = new RegExp(/^[A-Z]$/);
 
-export const buildIsoReferenceCheckSum = (data: string[]) => {
+export function buildIsoReferenceCheckSum(data: string[]): number {
 	if (data.length > 21) {
 		throw new Error('data too large');
 	}
@@ -15,7 +15,7 @@ export const buildIsoReferenceCheckSum = (data: string[]) => {
 		98 -
 		parseInt(
 			parts.reduce((prev, curr) => '' + (parseInt(prev + curr, 10) % 97), ''),
-			10,
+			10
 		)
 	);
-};
+}
