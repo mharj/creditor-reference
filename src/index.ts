@@ -11,6 +11,14 @@ interface IOptions {
 	leadingZeroes?: boolean;
 }
 
+/**
+ * Builds a Finnish reference code.
+ * @param {string} code - The base reference code.
+ * @param {IOptions} [options] - Optional settings for building the reference code.
+ * @param {boolean} [options.leadingZeroes] - If true, the output code will be zero-padded to 19 digits.
+ * @returns {string} The complete Finnish reference code including the check sum.
+ * @since v0.0.1
+ */
 function buildFiReference(code: string, options?: IOptions): string {
 	const values = code.split('').map((v) => parseInt(v, 10));
 	let outCode = code;
@@ -20,6 +28,15 @@ function buildFiReference(code: string, options?: IOptions): string {
 	return outCode + buildFiReferenceCheckSum(values);
 }
 
+/**
+ * Builds an ISO 11649 reference code.
+ * @param {string} code - The base reference code.
+ * @param {IOptions} [options] - Optional settings for building the reference code.
+ * @param {boolean} [options.leadingZeroes] - If true, the output code will be zero-padded to 21 digits.
+ * @returns {string} The complete ISO 11649 reference code including the check sum.
+ * @throws {Error} if no data to build Iso Reference
+ * @since v0.0.1
+ */
 function buildIsoReference(code: string, options?: IOptions): string {
 	if (code.length === 0) {
 		throw new Error('no data to build Iso Reference');
@@ -34,9 +51,13 @@ function buildIsoReference(code: string, options?: IOptions): string {
 
 /**
  * Builds creditor reference code
- * @param code base reference code
- * @param refType code type 'ISO' or 'FI'
- * @param options
+ * @param {string} code base reference code
+ * @param {RefType} refType code type 'ISO' or 'FI'
+ * @param {IOptions} [options] - Optional settings for building the reference code.
+ * @param {boolean} [options.leadingZeroes] - If true, the output code will be zero-padded
+ * @returns {string} reference code
+ * @throws {TypeError} if refType is unknown
+ * @since v0.0.1
  */
 export function build(code: string, refType: RefType, options?: IOptions): string {
 	const preCode = filterCode(code);
@@ -50,14 +71,20 @@ export function build(code: string, refType: RefType, options?: IOptions): strin
 	}
 }
 
+/**
+ * Removes all whitespace characters from the input code string.
+ * @param {string} code - The reference code to be filtered.
+ * @returns {string} The code string without any whitespace characters.
+ */
 function filterCode(code: string): string {
 	return code.replace(/\s/g, '');
 }
 
 /**
- *
- * @param code reference code
- * @return is code valid or not
+ * Verifies reference code
+ * @param {string} code reference code
+ * @returns {boolean} is code valid or not
+ * @since v0.0.1
  */
 export function verify(code: string): boolean {
 	const preCode = filterCode(code);
@@ -71,12 +98,14 @@ export function verify(code: string): boolean {
 
 /**
  * Gets code type with prefix check and verifying
- * @param code reference code
- * @return code type
+ * @param {string} code reference code
+ * @returns {RefType} code type
+ * @throws {TypeError} if refType is unknown
+ * @since v0.0.2
  */
 export function type(code: string): RefType {
 	const preCode = filterCode(code);
-	if (preCode.match(rfReg) && buildIsoReference(preCode.slice(4)) === preCode) {
+	if (rfReg.exec(preCode) && buildIsoReference(preCode.slice(4)) === preCode) {
 		return 'ISO';
 	} else if (buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode) {
 		return 'FI';

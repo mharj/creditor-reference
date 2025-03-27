@@ -2,16 +2,12 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es2017",
-		"lib": [
-			"es2017"
-		],
+		"lib": ["es2017"],
 		"rootDir": "./src",
 		"outDir": "./dist",
 		"moduleResolution": "node",
 		"sourceRoot": "./src",
-		"types": [
-			"node"
-		],
+		"types": ["node"],
 		"sourceMap": true,
 		"strict": true,
 		"declaration": true,
@@ -26,13 +22,6 @@
 		"strictNullChecks": true,
 		"noUnusedLocals": true
 	},
-	"include": [
-		"src/**/*",
-		"src/**/**/*"
-	],
-	"exclude": [
-		"node_modules",
-		"**/*.spec.ts",
-		"test"
-	]
+	"include": ["src"],
+	"exclude": ["node_modules", "**/*.spec.ts", "test"]
 }

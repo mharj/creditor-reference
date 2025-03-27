@@ -1,6 +1,4 @@
-process.env.NODE_ENV = 'test';
-import {expect} from 'chai';
-import 'mocha';
+import {describe, expect, it} from 'vitest';
 import {build, type, verify} from '../src';
 import {buildFiReferenceCheckSum} from '../src/finnish';
 import {buildIsoReferenceCheckSum} from '../src/iso11649';
