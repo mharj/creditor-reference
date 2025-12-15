@@ -23,7 +23,7 @@ function buildFiReference(code: string, options?: IOptions): string {
 	const values = code.split('').map((v) => parseInt(v, 10));
 	let outCode = code;
 	if (options && 'leadingZeroes' in options) {
-		outCode = ('0000000000000000000' + code).slice(-19);
+		outCode = `0000000000000000000${code}`.slice(-19);
 	}
 	return outCode + buildFiReferenceCheckSum(values);
 }
@@ -44,9 +44,9 @@ function buildIsoReference(code: string, options?: IOptions): string {
 	const preCode = code.replace(/^0+/, '').toUpperCase();
 	let outCode = preCode;
 	if (options && 'leadingZeroes' in options) {
-		outCode = ('000000000000000000000' + preCode).slice(-21);
+		outCode = `000000000000000000000${preCode}`.slice(-21);
 	}
-	return 'RF' + buildIsoReferenceCheckSum(preCode.split('')) + outCode;
+	return `RF${buildIsoReferenceCheckSum(preCode.split(''))}${outCode}`;
 }
 
 /**
@@ -90,9 +90,9 @@ export function verify(code: string): boolean {
 	const preCode = filterCode(code);
 	switch (type(preCode)) {
 		case 'ISO':
-			return buildIsoReference(preCode.slice(4)) === preCode ? true : false;
+			return buildIsoReference(preCode.slice(4)) === preCode;
 		case 'FI':
-			return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode ? true : false;
+			return buildFiReference(preCode.slice(0, preCode.length - 1)) === preCode;
 	}
 }
 

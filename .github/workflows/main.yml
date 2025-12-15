@@ -13,7 +13,6 @@ env:
   PACKAGE_VERSION: 'unknown'
   NPM: 'npm'
   NPM_VERSION: 'unknown'
-  HAVE_COVERAGE_SCRIPT: false
   HAVE_VALIDATE_SCRIPT: false
   HAVE_LINT_SCRIPT: false
   HAVE_UNIT_TEST_SCRIPT: false
@@ -30,7 +29,6 @@ jobs:
           [ -f pnpm-lock.yaml ] && echo "NPM=pnpm" | tee -a $GITHUB_ENV
           echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" | tee -a $GITHUB_ENV
           echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" | tee -a $GITHUB_ENV
-          echo "HAVE_COVERAGE_SCRIPT=$(jq 'if .scripts.coverage == null then false else true end' package.json)" | tee -a $GITHUB_ENV
           echo "HAVE_VALIDATE_SCRIPT=$(jq 'if .scripts.validate == null then false else true end' package.json)" | tee -a $GITHUB_ENV
           echo "HAVE_LINT_SCRIPT=$(jq 'if .scripts.lint == null then false else true end' package.json)" | tee -a $GITHUB_ENV
           echo "HAVE_UNIT_TEST_SCRIPT=$(jq 'if .scripts.test == null then false else true end' package.json)"| tee -a $GITHUB_ENV
@@ -61,17 +59,6 @@ jobs:
       - name: Run linter checks
         if: env.HAVE_LINT_SCRIPT == 'true'
         run: ${{ env.NPM }} run lint
-
-      - name: Run and publish code coverage
-        if: |
-          github.ref == env.PUBLISH_BRANCH &&
-          env.CC_TEST_REPORTER_ID != '' &&
-          env.HAVE_COVERAGE_SCRIPT == 'true'
-        uses: paambaati/codeclimate-action@v5.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ env.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: ${{ env.NPM }} run coverage
 
       # npm publish when PR done
       - name: Publish ${{env.PACKAGE_NAME}} ${{env.PACKAGE_VERSION}}

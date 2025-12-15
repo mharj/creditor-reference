@@ -14,14 +14,14 @@ export function buildIsoReferenceCheckSum(data: string[]): number {
 	const preData = data.concat(['R', 'F', '0', '0']);
 	const values = preData.map((v) => (textReg.exec(v) ? v.charCodeAt(0) - 55 : parseInt(v, 10)));
 	const parts = values.join('').match(/.{1,7}/g);
-	/* istanbul ignore if */
+	/* c8 ignore next 3 */
 	if (!parts) {
 		throw new Error('no parts to calculate');
 	}
 	return (
 		98 -
 		parseInt(
-			parts.reduce((prev, curr) => '' + (parseInt(prev + curr, 10) % 97), ''),
+			parts.reduce((prev, curr) => `${parseInt(prev + curr, 10) % 97}`, ''),
 			10,
 		)
 	);
