@@ -2,31 +2,31 @@
     "name": "creditor-reference",
     "version": "0.2.1",
     "description": "creditor reference code builder and verification",
-    "main": "./dist/index.js",
+    "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/index.d.mts",
     "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "require": "./dist/index.js",
-            "import": "./dist/index.mjs"
-        }
+        "import": {
+            "types": "./dist/index.d.mts",
+            "default": "./dist/index.mjs"
+        },
+        "require": {
+            "types": "./dist/index.d.cts",
+            "default": "./dist/index.cjs"
+        },
+        "default": "./dist/index.mjs"
     },
     "scripts": {
-        "build": "tsup src/index.ts --sourcemap --format cjs,esm --dts --clean",
+        "build": "tsdown src/index.ts --sourcemap --format cjs,esm --dts --clean",
         "prepublishOnly": "npm run build",
         "test": "vitest test --run --no-isolate --coverage",
-        "coverage": "vitest test --run --no-isolate --reporter=dot --coverage --coverage.reporter=lcov",
         "lint": "biome check",
         "validate": "tsc --noEmit"
     },
     "engines": {
         "node": ">=8.10.0"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mharj/creditor-reference.git"
-    },
+    "repository": "github:mharj/creditor-reference",
     "keywords": [
         "creditor",
         "reference",
@@ -42,12 +42,13 @@
     },
     "homepage": "https://github.com/mharj/creditor-reference#readme",
     "devDependencies": {
-        "@biomejs/biome": "2.3.8",
+        "@biomejs/biome": "^2.3.8",
         "@types/node": "^25.0.2",
-        "@vitest/coverage-v8": "^4.0.15",
-        "tsup": "^8.5.1",
-        "typescript": "^5.9.3",
-        "vitest": "^4.0.15"
+        "@vitest/coverage-v8": "^5.0.1",
+        "c8": "^12.0.0",
+        "tsdown": "^0.23.0",
+        "typescript": "^7.0.2",
+        "vitest": "^5.0.1"
     },
-    "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501"
+    "packageManager": "pnpm@12.4.2+sha512.08adc6613180275c7c9edada39dcf08c9c61ad4e7eaf330a4f3461f102b0f907423454d117f98e72d47fef0616070644d7bffc973a6a57f5090a6d7c368b07c9"
 }
