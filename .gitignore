@@ -65,3 +65,6 @@ dist
 
 # mocha-junit-reporter
 test-results.xml
+
+# pnpm store
+.pnpm-store

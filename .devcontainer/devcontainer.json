@@ -1,24 +1,23 @@
-// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.112.0/containers/typescript-node-12
 {
-	"name": "Creditor reference",
-	"dockerFile": "Dockerfile",
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.defaultProfile.linux": "bash"
-	},
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"ms-vscode.vscode-typescript-tslint-plugin",
-		"esbenp.prettier-vscode",
-		"hbenl.vscode-mocha-test-adapter",
-		"hbenl.vscode-test-explorer"
-	],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install",
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "node"
+  "name": "Creditor reference",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:5-24-trixie",
+  "customizations": {
+    "vscode": {
+      "extensions": ["biomejs.biome", "esbenp.prettier-vscode", "github.vscode-github-actions", "TypeScriptTeam.native-preview", "vitest.explorer"]
+    }
+  },
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pnpm install"
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }
